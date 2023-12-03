@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include  <bits/stdc++.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -57,6 +58,14 @@ class Wordle
     {
         cout << "enter in a word" << endl;
         getline(cin, guessedWord);
+        
+        while(!binary_search(allowed.begin(), allowed.end(), guessedWord))
+        {
+            
+            cout << "\nThat's not a permitted word try again" << endl;
+            getline(cin, guessedWord);
+            
+        }
         
     }
     
@@ -132,6 +141,7 @@ int main()
         attempt_counter = 0;
         win_check = false;
         
+        game.loadAllowed();
         game.loadWords();
         
         while((attempt_counter < 6) && !win_check)
