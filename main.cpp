@@ -13,9 +13,9 @@ class Wordle
     string correctWord = "games";
     string guessedWord;
     
-    int green = 0;
-    int yellow = 0;
-    int grey = 0;
+    vector<char> green;
+    vector<char> yellow;
+    vector<char> grey;
     
     void setGuess()
     {
@@ -27,29 +27,26 @@ class Wordle
     
     bool solutionChecker()
     {
-        green = 0;
-        yellow = 0;
-        grey = 0;
         
         for (size_t i = 0; i < correctWord.size(); ++i) 
         {
         if (guessedWord[i] == correctWord[i]) 
         {
             cout << "\033[1;32m" << guessedWord[i] << "\033[0m"; // Green
-            green++;
+            green.push_back(guessedWord[i]);
         } 
         else if (find(correctWord.begin(), correctWord.end(), guessedWord[i]) != correctWord.end()) 
         {
             cout << "\033[1;33m" << guessedWord[i] << "\033[0m"; // Yellow
-            yellow++;
+            yellow.push_back(guessedWord[i]);
         } 
         else {
             cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
-            grey++;
+            grey.push_back(guessedWord[i]);
         }
         }
         
-        if(green == 5)
+        if(guessedWord == correctWord)
         {   
             cout << "\nyou win!" << endl;
             return true;
@@ -59,9 +56,6 @@ class Wordle
             cout << "\ntry again" << endl;
             return false;
         }
-        
-        
-        
     }
     
     
