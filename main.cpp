@@ -69,7 +69,7 @@ class Wordle
         //cout << "enter in a word" << endl;
         getline(cin, guessedWord);
         
-        while(!binary_search(allowed.begin(), allowed.end(), guessedWord))
+        while(!binary_search(allowed.begin(), allowed.end(), guessedWord) && !binary_search(words.begin(), words.end(), guessedWord))
         {
             
             cout << "\nThat's not a permitted word try again" << endl;
@@ -117,9 +117,9 @@ class Wordle
 };
 
 
-void writeToTxt(vector<string> stuff, string fileName)
+void writeToTxt(vector<string> &stuff, string fileName)
 {
-    ofstream myfile(fileName);
+    ofstream myfile(fileName, ofstream::app);
 
     if(myfile.is_open())
     {
@@ -133,12 +133,106 @@ void writeToTxt(vector<string> stuff, string fileName)
     }
 }
 
+bool clearFile(string fileName)
+{
+
+  bool isCleared = false;
+  int length;
+
+  //takes in file name and clears the file
+  ofstream myfile(fileName);
+  myfile.close();
+
+  //check if succsesful if yes then return true
+  ifstream is;
+  is.open (fileName.c_str(), ios::binary);
+  is.seekg (0, ios::end);
+  length = is.tellg();
+
+  // check if number of charachters in file is 0 then 
+  if (length == 0)
+  {
+    isCleared = true;
+  }
+
+  return isCleared;
+  
+}
+
+vector<string> loadTxt(string fileName) 
+{
+    
+    string x;
+    vector<string> y;
+    ifstream file(fileName);
+    if (file.is_open()) 
+    {
+        string x;
+        while (getline(file, x)) 
+        {
+            y.push_back(x);
+        }
+        file.close();
+    }
+    
+    return y;
+}
+
+void displayStatistics(const std::vector<std::string>& wins, const std::vector<std::string>& losses, const std::vector<std::string>& attempts, const std::vector<std::string>& words) 
+{
+    
+    int timesPlayed = wins.size();
+    double totalAttempts = 0;
+    double winCount = 0;
+    int currentStreak = 0;
+    int longestStreak = 0;
+
+    for (int i = 0; i < timesPlayed; ++i) 
+    {
+        totalAttempts += stoi(attempts[i]);
+        winCount += (wins[i] == "Yes") ? 1 : 0;
+        
+        if (wins[i] == "Yes") 
+        {
+            currentStreak++;
+            longestStreak = max(longestStreak, currentStreak);
+        } 
+        else 
+        {
+            currentStreak = 0;
+        }
+    }
+
+    // Display Statistics Summary
+    std::cout << "==========================\n";
+    std::cout << "    STATISTICS SUMMARY\n";
+    std::cout << "==========================\n";
+    std::cout << "Times Played:         " << timesPlayed << "\n";
+    std::cout << "Average Attempts:     " << (timesPlayed > 0 ? totalAttempts / timesPlayed : 0) << "\n";
+    std::cout << "Win Percentage:       " << fixed << setprecision(1) << (timesPlayed > 0 ? (winCount / timesPlayed) * 100 : 0) << "%\n";
+    std::cout << "Current Streak:       " << currentStreak << "\n";
+    std::cout << "Longest Streak:       " << longestStreak << "\n\n";
+    std::cout << "--------------------------\n";
+    std::cout << "WORD     ATTEMPTS      WIN\n";
+    std::cout << "--------------------------\n";
+
+    for (int i = 0; i < timesPlayed; ++i) 
+    {
+        std::cout << setw(8) << words[i] << setw(8) << attempts[i] << setw(8) << wins[i] << "\n";
+    }
+
+    cout << "\nPress [enter] to continue";
+}
+
+
 int main()
 {
     
     int attempt_counter = 0;
     bool win_check = false;
     string option;
+    string blank_space;
+    
     vector<string> attempt_list;
     vector<string> wins;
     vector<string> losses;
@@ -151,7 +245,7 @@ int main()
     
     do{
         
-        cout << wins.size() << " wins and losses " << losses.size()  << attempt_list.size()<< endl;;
+        //cout << wins.size() << " wins and losses " << losses.size()  << attempt_list.size()<< endl;;
         
     cout << "=========================" << endl;
     cout << "WELCOME TO WORDLE" << endl;
@@ -192,14 +286,16 @@ int main()
             win_check = game.solutionChecker();
             if(win_check)
             {
-                wins.push_back("1");
+                wins.push_back("Yes");
+                losses.push_back("No");
                 attempt_list.push_back(to_string(attempt_counter));
             }
         }
         
         if(!win_check)
         {
-            losses.push_back("1");
+            wins.push_back("No");
+            losses.push_back("Yes");
             //cout << "adding a loss" << endl;
             attempt_list.push_back(to_string(attempt_counter));
         }
@@ -212,10 +308,21 @@ int main()
     else if(option == "3")
     {
         cout << "Statistics Summary" << endl;
+        displayStatistics(wins, losses, attempt_list, word_list);
+        
+        //change to wait for enter
+        cin >> blank_space;
+        
     }
     else if(option == "4")
     {
         cout << "Reset Statistics" << endl;
+        clearFile("wins.txt");
+        clearFile("losses.txt");
+        clearFile("attempt_list.txt");
+        clearFile("word_list.txt");
+        
+        
     }
     else if(option == "5")
     {
