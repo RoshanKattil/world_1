@@ -6,8 +6,80 @@
 
 using namespace std;
 
+class Wordle
+{
+    
+    string correctWord = "games";
+    string guessedWord = "books";
+    
+    int green = 0;
+    int yellow = 0
+    int grey = 0;
+    
+    void setGuess()
+    {
+        
+        string option;
+        getline(cin, option);
+        
+    }
+    
+    bool solutionChecker()
+    {
+        
+        if(correctWord == guessedWord)
+        {
+            
+            green = 5;
+            return true;
+        }
+        else
+        {
+            
+            for(int i = 0; i < 5; i++)
+            {
+            
+                for(int n = 0; n < 5; n++)
+                {
+                    
+                    if((i == n) && (correctWord[i] == correctWord(n)))
+                    {
+                        
+                        green++;
+                        
+                    }
+                    else if(!(i == n) && (correctWord[i] == correctWord(n)))
+                    {
+                        
+                        yellow++;
+                        
+                    }
+                    else
+                    {
+                        
+                        grey++;
+                        
+                    }
+                    
+                }
+            
+            }
+            
+            return false;
+        }
+        
+        
+        
+    }
+    
+    
+    
+}
+
 int main()
 {
+    
+    
     cout << "=========================" << endl;
     cout << "WELCOME TO WORDLE" << endl;
     cout << "=========================" << endl;
@@ -46,6 +118,10 @@ int main()
     {
         cout << "Exit" << endl;
     }
+    
+    
+    
+    
     
     
     return 0;
