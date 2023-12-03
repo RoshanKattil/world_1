@@ -24,17 +24,12 @@ class Wordle
         
     }
     
-    void checkColors()
-    {
-        
-        cout << "green: " << green;
-        cout << "yellow: " << yellow;
-        cout << "grey: " << grey;
-        
-    }
     
     bool solutionChecker()
     {
+        green = 0;
+        yellow = 0;
+        grey = 0;
         
         for (size_t i = 0; i < correctWord.size(); ++i) 
         {
@@ -54,6 +49,17 @@ class Wordle
         }
         }
         
+        if(green == 5)
+        {   
+            cout << "\nyou win!" << endl;
+            return true;
+        }
+        else
+        {
+            cout << "\ntry again" << endl;
+            return false;
+        }
+        
         
         
     }
@@ -64,6 +70,9 @@ class Wordle
 
 int main()
 {
+    
+    int attempt_counter = 0;
+    bool win_check = false;
     
     
     cout << "=========================" << endl;
@@ -82,19 +91,22 @@ int main()
     cout << "Select an option:" << endl;
     
     string option;
-    getline(cin, option); 
+    getline(cin, option);
     
     if(option == "1")
     {
         cout << "play Wordle" << endl;
         Wordle game;
         
-        game.setGuess();
+        attempt_counter = 0;
+        win_check = false;
         
-        game.solutionChecker();
-        
-        game.checkColors();
-        
+        while((attempt_counter < 6) && !win_check)
+        {
+            game.setGuess();
+            attempt_counter++;
+            win_check = game.solutionChecker();
+        }
         
     }
     else if(option == "2")
