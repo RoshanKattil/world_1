@@ -8,19 +8,28 @@ using namespace std;
 
 class Wordle
 {
+    public:
     
     string correctWord = "games";
-    string guessedWord = "books";
+    string guessedWord;
     
     int green = 0;
-    int yellow = 0
+    int yellow = 0;
     int grey = 0;
     
     void setGuess()
     {
+        cout << "enter in a word" << endl;
+        getline(cin, guessedWord);
         
-        string option;
-        getline(cin, option);
+    }
+    
+    void checkColors()
+    {
+        
+        cout << "green: " << green;
+        cout << "yellow: " << yellow;
+        cout << "grey: " << grey;
         
     }
     
@@ -31,10 +40,14 @@ class Wordle
         {
             
             green = 5;
+            
+            cout << "you win!" << endl;
             return true;
         }
         else
         {
+            
+            cout << "not the solution" << endl;
             
             for(int i = 0; i < 5; i++)
             {
@@ -42,13 +55,13 @@ class Wordle
                 for(int n = 0; n < 5; n++)
                 {
                     
-                    if((i == n) && (correctWord[i] == correctWord(n)))
+                    if((i == n) && (correctWord[i] == correctWord[n]))
                     {
                         
                         green++;
                         
                     }
-                    else if(!(i == n) && (correctWord[i] == correctWord(n)))
+                    else if(!(i == n) && (correctWord[i] == correctWord[n]))
                     {
                         
                         yellow++;
@@ -65,6 +78,7 @@ class Wordle
             
             }
             
+            
             return false;
         }
         
@@ -74,7 +88,7 @@ class Wordle
     
     
     
-}
+};
 
 int main()
 {
@@ -101,6 +115,15 @@ int main()
     if(option == "1")
     {
         cout << "play Wordle" << endl;
+        Wordle game;
+        
+        game.setGuess();
+        
+        game.solutionChecker();
+        
+        game.checkColors();
+        
+        
     }
     else if(option == "2")
     {
