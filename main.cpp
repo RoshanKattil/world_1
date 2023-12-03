@@ -10,6 +10,9 @@ class Wordle
 {
     public:
     
+    const string allowedTxt = "allowed.txt";
+    const string wordsTxt = "words.txt";
+    
     string correctWord = "games";
     string guessedWord;
     
@@ -17,12 +20,46 @@ class Wordle
     vector<char> yellow;
     vector<char> grey;
     
+    vector<string> allowed;
+    vector<string> words;
+    
+    void loadAllowed() 
+    {
+        
+        ifstream file(allowedTxt);
+        if (file.is_open()) 
+        {
+            string word;
+            while (getline(file, word)) 
+            {
+                allowed.push_back(word);
+            }
+            file.close();
+        }
+    }
+    
+    void loadWords() 
+    {
+        
+        ifstream file(wordsTxt);
+        if (file.is_open()) 
+        {
+            string word;
+            while (getline(file, word)) 
+            {
+                words.push_back(word);
+            }
+            file.close();
+        }
+    }
+    
     void setGuess()
     {
         cout << "enter in a word" << endl;
         getline(cin, guessedWord);
         
     }
+    
     
     
     bool solutionChecker()
@@ -94,6 +131,8 @@ int main()
         
         attempt_counter = 0;
         win_check = false;
+        
+        game.loadWords();
         
         while((attempt_counter < 6) && !win_check)
         {
