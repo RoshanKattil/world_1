@@ -23,5 +23,30 @@ int main()
 
     cout << "Select an option:" << endl;
     
+    string option;
+    getline(cin, option); 
+    
+    if(option == "1")
+    {
+        cout << "play Wordle" << endl;
+    }
+    else if(option == "2")
+    {
+        cout << "How to play" << endl;
+    }
+    else if(option == "3")
+    {
+        cout << "Statistics Summary" << endl;
+    }
+    else if(option == "4")
+    {
+        cout << "Reset Statistics" << endl;
+    }
+    else if(option == "5")
+    {
+        cout << "Exit" << endl;
+    }
+    
+    
     return 0;
 }
