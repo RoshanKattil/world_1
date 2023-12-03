@@ -39,12 +39,14 @@ class Wordle
         }
     }
     
-    void randomWordGen()
+    string randomWordGen()
     {
         int randomIndex = rand() % words.size();
         correctWord = words[randomIndex];
         
         cout << "the answer is " << correctWord << endl;
+        
+        return correctWord;
     }
     
     void loadWords() 
@@ -63,7 +65,7 @@ class Wordle
     
     void setGuess()
     {
-        cout << "enter in a word" << endl;
+        //cout << "enter in a word" << endl;
         getline(cin, guessedWord);
         
         while(!binary_search(allowed.begin(), allowed.end(), guessedWord))
@@ -104,7 +106,7 @@ class Wordle
         }
         else
         {
-            cout << "\ntry again" << endl;
+            //cout << "\ntry again" << endl;
             return false;
         }
     }
@@ -118,8 +120,21 @@ int main()
     
     int attempt_counter = 0;
     bool win_check = false;
+    string option;
+    vector<int> attempt_list;
+    vector<int> wins;
+    vector<int> losses;
+    vector<string> word_list;
     
     
+    
+    
+    
+    
+    do{
+        
+        cout << wins.size() << " wins and losses " << losses.size()  << attempt_list.size()<< endl;;
+        
     cout << "=========================" << endl;
     cout << "WELCOME TO WORDLE" << endl;
     cout << "=========================" << endl;
@@ -135,7 +150,7 @@ int main()
 
     cout << "Select an option:" << endl;
     
-    string option;
+    
     getline(cin, option);
     
     if(option == "1")
@@ -150,13 +165,25 @@ int main()
         game.loadAllowed();
         game.loadWords();
         
-        game.randomWordGen();
+        word_list.push_back(game.randomWordGen());
         
         while((attempt_counter < 6) && !win_check)
         {
             game.setGuess();
             attempt_counter++;
             win_check = game.solutionChecker();
+            if(win_check)
+            {
+                wins.push_back(1);
+                attempt_list.push_back(attempt_counter);
+            }
+        }
+        
+        if(!win_check)
+        {
+            losses.push_back(1);
+            //cout << "adding a loss" << endl;
+            attempt_list.push_back(attempt_counter);
         }
         
     }
@@ -175,8 +202,13 @@ int main()
     else if(option == "5")
     {
         cout << "Exit" << endl;
+        break;
+    }
     }
     
+    
+    
+    while(option != "5");
     
     
     
