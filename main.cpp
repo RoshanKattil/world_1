@@ -36,50 +36,22 @@ class Wordle
     bool solutionChecker()
     {
         
-        if(correctWord == guessedWord)
+        for (size_t i = 0; i < correctWord.size(); ++i) 
         {
-            
-            green = 5;
-            
-            cout << "you win!" << endl;
-            return true;
+        if (guessedWord[i] == correctWord[i]) 
+        {
+            cout << "\033[1;32m" << guessedWord[i] << "\033[0m"; // Green
+            green++;
+        } 
+        else if (find(correctWord.begin(), correctWord.end(), guessedWord[i]) != correctWord.end()) 
+        {
+            cout << "\033[1;33m" << guessedWord[i] << "\033[0m"; // Yellow
+            yellow++;
+        } 
+        else {
+            cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
+            grey++;
         }
-        else
-        {
-            
-            cout << "not the solution" << endl;
-            
-            for(int i = 0; i < 5; i++)
-            {
-            
-                for(int n = 0; n < 5; n++)
-                {
-                    
-                    if((i == n) && (correctWord[i] == correctWord[n]))
-                    {
-                        
-                        green++;
-                        
-                    }
-                    else if(!(i == n) && (correctWord[i] == correctWord[n]))
-                    {
-                        
-                        yellow++;
-                        
-                    }
-                    else
-                    {
-                        
-                        grey++;
-                        
-                    }
-                    
-                }
-            
-            }
-            
-            
-            return false;
         }
         
         
