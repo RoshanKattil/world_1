@@ -121,9 +121,9 @@ int main()
     int attempt_counter = 0;
     bool win_check = false;
     string option;
-    vector<int> attempt_list;
-    vector<int> wins;
-    vector<int> losses;
+    vector<string> attempt_list;
+    vector<string> wins;
+    vector<string> losses;
     vector<string> word_list;
     
     
@@ -174,16 +174,16 @@ int main()
             win_check = game.solutionChecker();
             if(win_check)
             {
-                wins.push_back(1);
-                attempt_list.push_back(attempt_counter);
+                wins.push_back("1");
+                attempt_list.push_back(to_string(attempt_counter));
             }
         }
         
         if(!win_check)
         {
-            losses.push_back(1);
+            losses.push_back("1");
             //cout << "adding a loss" << endl;
-            attempt_list.push_back(attempt_counter);
+            attempt_list.push_back(to_string(attempt_counter));
         }
         
     }
