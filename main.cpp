@@ -5,6 +5,7 @@
 #include  <bits/stdc++.h>
 #include <algorithm>
 
+
 using namespace std;
 
 class Wordle
@@ -115,6 +116,23 @@ class Wordle
     
 };
 
+
+void writeToTxt(vector<string> stuff, string fileName)
+{
+    ofstream myfile(fileName);
+
+    if(myfile.is_open())
+    {
+        string str;
+        for(int i = 0; i < stuff.size(); i++)
+        {
+            str = stuff[i];
+            myfile<<str<< endl;
+        }
+        myfile.close();
+    }
+}
+
 int main()
 {
     
@@ -202,6 +220,12 @@ int main()
     else if(option == "5")
     {
         cout << "Exit" << endl;
+        
+        writeToTxt(wins, "wins.txt");
+        writeToTxt(losses, "losses.txt");
+        writeToTxt(attempt_list, "attempt_list.txt");
+        writeToTxt(word_list, "word_list.txt");
+        
         break;
     }
     }
