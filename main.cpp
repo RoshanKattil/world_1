@@ -14,7 +14,7 @@ class Wordle
     const string allowedTxt = "allowed.txt";
     const string wordsTxt = "words.txt";
     
-    string correctWord = "games";
+    string correctWord;
     string guessedWord;
     
     vector<char> green;
@@ -39,9 +39,16 @@ class Wordle
         }
     }
     
+    void randomWordGen()
+    {
+        int randomIndex = rand() % words.size();
+        correctWord = words[randomIndex];
+        
+        cout << "the answer is " << correctWord << endl;
+    }
+    
     void loadWords() 
     {
-        
         ifstream file(wordsTxt);
         if (file.is_open()) 
         {
@@ -66,14 +73,12 @@ class Wordle
             getline(cin, guessedWord);
             
         }
-        
     }
     
     
     
     bool solutionChecker()
     {
-        
         for (size_t i = 0; i < correctWord.size(); ++i) 
         {
         if (guessedWord[i] == correctWord[i]) 
@@ -138,11 +143,14 @@ int main()
         cout << "play Wordle" << endl;
         Wordle game;
         
+        
         attempt_counter = 0;
         win_check = false;
         
         game.loadAllowed();
         game.loadWords();
+        
+        game.randomWordGen();
         
         while((attempt_counter < 6) && !win_check)
         {
