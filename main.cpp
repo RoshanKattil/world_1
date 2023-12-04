@@ -4,10 +4,15 @@
 #include <iostream>
 #include  <bits/stdc++.h>
 #include <algorithm>
+#include <random>
 
 #include "dataMod.h"
 #include "showStats.h"
 #include "howToPlay.h"
+
+
+#include <termios.h>
+#include <unistd.h>
 
 
 using namespace std;
@@ -46,7 +51,13 @@ class Wordle
     
     string randomWordGen()
     {
-        int randomIndex = rand() % words.size();
+
+        random_device rd; // obtain a random number from hardware
+        mt19937 gen(rd()); // seed the generator
+        uniform_int_distribution<> distr(0, words.size());
+        int randomIndex = distr(gen);
+
+        //int randomIndex = rand() % words.size();
         correctWord = words[randomIndex];
         
         cout << "the answer is " << correctWord << endl;
@@ -102,7 +113,11 @@ class Wordle
                 cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
                 grey.push_back(guessedWord[i]);
             }
+
+            cout << " | ";
         }
+        
+        cout << "\n";
         
         if(guessedWord == correctWord)
         {   
@@ -124,6 +139,12 @@ class Wordle
 int main()
 {
     
+    termios oldt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    termios newt = oldt;
+    newt.c_lflag &= ~ECHO;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     int attempt_counter = 0;
     bool win_check = false;
     string option;
