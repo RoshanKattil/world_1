@@ -7,6 +7,7 @@
 
 #include "dataMod.h"
 #include "showStats.h"
+#include "howToPlay.h"
 
 
 using namespace std;
@@ -87,20 +88,20 @@ class Wordle
     {
         for (size_t i = 0; i < correctWord.size(); ++i) 
         {
-        if (guessedWord[i] == correctWord[i]) 
-        {
-            cout << "\033[1;32m" << guessedWord[i] << "\033[0m"; // Green
-            green.push_back(guessedWord[i]);
-        } 
-        else if (find(correctWord.begin(), correctWord.end(), guessedWord[i]) != correctWord.end()) 
-        {
-            cout << "\033[1;33m" << guessedWord[i] << "\033[0m"; // Yellow
-            yellow.push_back(guessedWord[i]);
-        } 
-        else {
-            cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
-            grey.push_back(guessedWord[i]);
-        }
+            if (guessedWord[i] == correctWord[i]) 
+            {
+                cout << "\033[1;32m" << guessedWord[i] << "\033[0m"; // Green
+                green.push_back(guessedWord[i]);
+            } 
+            else if (find(correctWord.begin(), correctWord.end(), guessedWord[i]) != correctWord.end()) 
+            {
+                cout << "\033[1;33m" << guessedWord[i] << "\033[0m"; // Yellow
+                yellow.push_back(guessedWord[i]);
+            } 
+            else {
+                cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
+                grey.push_back(guessedWord[i]);
+            }
         }
         
         if(guessedWord == correctWord)
@@ -193,12 +194,19 @@ int main()
             losses.push_back("Yes");
             //cout << "adding a loss" << endl;
             attempt_list.push_back(to_string(attempt_counter));
+            
+            
         }
+        
+        cout << "Press [enter] to continue" << endl;
+        getline(cin, blank_space);
         
     }
     else if(option == "2")
     {
         cout << "How to play" << endl;
+        displayHowToPlay();
+        getline(cin, blank_space);
     }
     else if(option == "3")
     {
@@ -206,7 +214,7 @@ int main()
         displayStatistics(wins, losses, attempt_list, word_list);
         
         //change to wait for enter
-        cin >> blank_space;
+        getline(cin, blank_space);
         
     }
     else if(option == "4")
