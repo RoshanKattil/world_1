@@ -27,9 +27,9 @@ class Wordle
     string correctWord;
     string guessedWord;
     
-    vector<char> green;
-    vector<char> yellow;
-    vector<char> grey;
+    vector<string> green;
+    vector<string> yellow;
+    vector<string> grey;
     
     vector<string> allowed;
     vector<string> words;
@@ -97,27 +97,39 @@ class Wordle
     
     bool solutionChecker()
     {
+        string tempString;
         for (size_t i = 0; i < correctWord.size(); ++i) 
         {
             if (guessedWord[i] == correctWord[i]) 
             {
                 cout << "\033[1;32m" << guessedWord[i] << "\033[0m"; // Green
-                green.push_back(guessedWord[i]);
+                tempString += guessedWord[i];
+                green.push_back(tempString);
+                tempString = "";
             } 
             else if (find(correctWord.begin(), correctWord.end(), guessedWord[i]) != correctWord.end()) 
             {
                 cout << "\033[1;33m" << guessedWord[i] << "\033[0m"; // Yellow
-                yellow.push_back(guessedWord[i]);
+                tempString += guessedWord[i];
+                yellow.push_back(tempString);
+                tempString = "";
             } 
             else {
                 cout << "\033[1;37m" << guessedWord[i] << "\033[0m"; // Grey
-                grey.push_back(guessedWord[i]);
+                tempString += guessedWord[i];
+                grey.push_back(tempString);
+                tempString = "";
             }
 
             cout << " | ";
         }
-        
+
         cout << "\n";
+        
+        
+        writeToTxt(green, "green.txt");
+        writeToTxt(yellow, "yellow.txt");
+        writeToTxt(grey, "grey.txt");
         
         if(guessedWord == correctWord)
         {   
@@ -221,6 +233,11 @@ int main()
         
         cout << "Press [enter] to continue" << endl;
         getline(cin, blank_space);
+
+
+        clearFile("green.txt");
+        clearFile("yellow.txt");
+        clearFile("grey.txt");
         
     }
     else if(option == "2")
