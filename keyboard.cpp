@@ -6,30 +6,49 @@
 #include  <bits/stdc++.h>
 #include <algorithm>
 
-#include "assignments/programming-project/exercise-1/wordle/dataMod.h"
+#include "/home/me/workspace/assignments/programming-project/exercise-1/wordle/dataMod.h"
 
 using namespace std;
+
+bool look_for(vector<string> x, string y)
+{
+
+        for( string i : x)
+        {
+
+            if(i == y)
+            {
+                return true;
+            }
+
+        }
+        
+        return false;
+
+}
 
 void displayKeyboardViewer() {
     cout << "=============================================\n";
     cout << "           KEYBOARD VIEWER\n";
     cout << "=============================================\n\n";
     
-    vector<string> green = loadTxt("assignments/programming-project/exercise-1/wordle/green.txt");
-    vector<string> yellow = loadTxt("assignments/programming-project/exercise-1/wordle/yellow.txt");
-    vector<string> grey = loadTxt("assignments/programming-project/exercise-1/wordle/grey.txt");
+    vector<string> green = loadTxt("/home/me/workspace/assignments/programming-project/exercise-1/wordle/green.txt");
+    vector<string> yellow = loadTxt("/home/me/workspace/assignments/programming-project/exercise-1/wordle/yellow.txt");
+    vector<string> grey = loadTxt("/home/me/workspace/assignments/programming-project/exercise-1/wordle/grey.txt");
     
     string tempString = "";
+
+    
     
     
     for (char c = 'A'; c <= 'Z'; ++c) 
     {
         tempString += c;
         
-        if (green.find(tempString)) {
+        if (look_for(green, tempString)) {
             cout << "\033[1;32m" << setw(3) << c << "\033[0m"; // Green
         }
-        else if(yellow.find(tempString))
+        else if(look_for(yellow, tempString))
         {
             
             cout << "\033[1;33m" << setw(3) << c << "\033[0m"; // Yellow
