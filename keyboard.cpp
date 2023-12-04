@@ -41,7 +41,7 @@ void displayKeyboardViewer() {
     
     
     
-    for (char c = 'A'; c <= 'Z'; ++c) 
+    for (char c = 'a'; c <= 'z'; ++c) 
     {
         tempString += c;
         
@@ -54,11 +54,14 @@ void displayKeyboardViewer() {
             cout << "\033[1;33m" << setw(3) << c << "\033[0m"; // Yellow
             
         }
-        else 
+        else if(look_for(grey, tempString))
         {
             cout << "\033[1;37m" << setw(3) << c << "\033[0m"; // Gray
         }
-        
+        else
+        {
+            cout << setw(3) << c; // Gray
+        }
         
 
         // Add a newline every 10 characters for better readability
