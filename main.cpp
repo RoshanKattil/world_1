@@ -232,7 +232,11 @@ int main()
     else if(option == "3")
     {
         cout << "Statistics Summary" << endl;
-        displayStatistics(wins, losses, attempt_list, word_list);
+        vector<string> wins1 = loadTxt("wins.txt");
+        vector<string> losses1 = loadTxt("losses.txt");
+        vector<string> attempt_list1 = loadTxt("attempt_list.txt");
+        vector<string> word_list1 = loadTxt("word_list.txt");
+        displayStatistics(wins1, losses1, attempt_list1, word_list1);
         
         //change to wait for enter
         getline(cin, blank_space);
