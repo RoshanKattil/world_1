@@ -238,6 +238,16 @@ int main()
         clearFile("green.txt");
         clearFile("yellow.txt");
         clearFile("grey.txt");
+
+        writeToTxt(wins, "wins.txt");
+        writeToTxt(losses, "losses.txt");
+        writeToTxt(attempt_list, "attempt_list.txt");
+        writeToTxt(word_list, "word_list.txt");
+
+        wins.clear();
+        losses.clear();
+        attempt_list.clear();
+        word_list.clear();
         
     }
     else if(option == "2")
@@ -273,10 +283,7 @@ int main()
     {
         cout << "Exit" << endl;
         
-        writeToTxt(wins, "wins.txt");
-        writeToTxt(losses, "losses.txt");
-        writeToTxt(attempt_list, "attempt_list.txt");
-        writeToTxt(word_list, "word_list.txt");
+        
         
         break;
     }
